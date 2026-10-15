@@ -194,3 +194,30 @@ test('PWA Security: service-worker.js never caches external API or sensitive end
   assert.ok(content.includes('edubuddy-v3'), 'Must use bumped cache version edubuddy-v3');
 });
 
+// ------------------------------------------------------------------------------
+// Test Suite 6: Runtime Configuration & Environment Endpoint Verification
+// ------------------------------------------------------------------------------
+test('Runtime Config: api/config.js exists and never exposes service_role', () => {
+  const apiPath = path.join(projectRoot, 'api/config.js');
+  assert.ok(fs.existsSync(apiPath), 'api/config.js must exist for Vercel deployment');
+  const content = fs.readFileSync(apiPath, 'utf8');
+
+  assert.ok(!/service_role/i.test(content), 'api/config.js must never mention or read service_role');
+  assert.ok(content.includes('VITE_SUPABASE_ANON_KEY') || content.includes('SUPABASE_ANON_KEY'), 'Must read public anon key');
+  assert.ok(content.includes('VITE_SUPABASE_URL') || content.includes('SUPABASE_URL'), 'Must read Supabase URL');
+});
+
+test('Runtime Config: isValidConfig correctly validates configuration inputs', async () => {
+  const { isValidConfig } = await import('../src/core/config.js');
+
+  // Must reject empty or placeholder values
+  assert.equal(isValidConfig('', ''), false);
+  assert.equal(isValidConfig('https://your-project-id.supabase.co', 'valid-key'), false);
+  assert.equal(isValidConfig('https://example.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'), false);
+  assert.equal(isValidConfig('not-a-valid-url', 'some-anon-key'), false);
+
+  // Must accept valid configuration
+  assert.equal(isValidConfig('https://ljsvsmvjkewobxseztxk.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy.sig'), true);
+});
+
+

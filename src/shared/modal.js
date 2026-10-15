@@ -47,7 +47,7 @@ export function appToast(m) {
   e.className = 'tst';
   e.textContent = m;
   e.style.cssText =
-    'position:fixed;bottom:104px;left:50%;transform:translateX(-50%);background:#283044;color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;z-index:99;max-width:90%;text-align:center';
+    'position:fixed;bottom:104px;left:16px;right:16px;margin:0 auto;width:fit-content;max-width:calc(100vw - 32px);box-sizing:border-box;background:#283044;color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;z-index:99;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,0.18)';
   document.body.appendChild(e);
   setTimeout(function () {
     e.remove();

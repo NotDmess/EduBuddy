@@ -137,20 +137,35 @@ server.listen(PORT, '127.0.0.1', async () => {
     }
 
     await send('Page.navigate', { url: `http://127.0.0.1:${PORT}/index.html` });
-    await new Promise((r) => setTimeout(r, 1200));
 
-    // Bypass guest setup modal if visible
-    const guestBtnExists = await evaluate(`!!document.getElementById('cfg-guest')`);
-    if (guestBtnExists) {
-      await evaluate(`document.getElementById('cfg-guest').click()`);
-      await new Promise((r) => setTimeout(r, 600));
+    // Wait until app is ready or guest modal is shown
+    for (let i = 0; i < 30; i++) {
+      const state = await evaluate(`(() => {
+        const guestBtn = document.getElementById('cfg-guest');
+        if (guestBtn) {
+          guestBtn.click();
+          return 'guest_clicked';
+        }
+        if (typeof window.go === 'function' && document.getElementById('view')?.innerHTML) {
+          return 'ready';
+        }
+        return 'waiting';
+      })()`);
+      if (state === 'guest_clicked') {
+        await new Promise((r) => setTimeout(r, 500));
+        break;
+      }
+      if (state === 'ready') break;
+      await new Promise((r) => setTimeout(r, 200));
     }
+    await evaluate(`document.fonts.ready`);
+    await new Promise((r) => setTimeout(r, 400));
 
     // Check overflow on initial load
     const mobileOverflow = await evaluate(`({
-      scrollWidth: document.body.scrollWidth,
-      clientWidth: document.body.clientWidth,
-      hasOverflow: document.body.scrollWidth > document.body.clientWidth
+      scrollWidth: Math.max(document.body.scrollWidth, document.documentElement.scrollWidth),
+      clientWidth: window.innerWidth,
+      hasOverflow: Math.max(document.body.scrollWidth, document.documentElement.scrollWidth) > window.innerWidth
     })`);
     if (mobileOverflow.hasOverflow) {
       auditResults.overflowIssues.push({ viewport: 'Mobile', ...mobileOverflow });
@@ -201,7 +216,7 @@ server.listen(PORT, '127.0.0.1', async () => {
           interactiveCount: elements.length,
           breakdown,
           headerBackVisible: document.getElementById('hback')?.style.display !== 'none',
-          bodyOverflow: document.body.scrollWidth > document.body.clientWidth
+          bodyOverflow: Math.max(document.body.scrollWidth, document.documentElement.scrollWidth) > window.innerWidth
         };
       })()`);
 

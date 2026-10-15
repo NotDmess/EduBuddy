@@ -4,7 +4,7 @@
 
 import { state, setUid, setME } from '../core/state.js';
 import { BTN, IC, appToast } from '../shared/modal.js';
-import { getConfig, saveConfig } from '../core/config.js';
+import { getConfig, saveConfig, loadConfig } from '../core/config.js';
 import {
   registerUser,
   loginUser,
@@ -124,7 +124,10 @@ export function enter(u, msg) {
  * Checks for Supabase Auth session or guest session.
  */
 export async function initAuth() {
-  const cfg = getConfig();
+  let cfg = getConfig();
+  if (!cfg.isConfigured) {
+    cfg = await loadConfig();
+  }
   if (!cfg.isConfigured) {
     // Show setup banner or allow guest mode if unconfigured
     showSetupNotice();
@@ -194,7 +197,7 @@ export function showSetupNotice() {
   const LG = headerImg ? headerImg.src : '';
 
   a.innerHTML =
-    '<div style="max-width:440px;margin:0 auto;padding:40px 24px 32px" class="flex flex-col gap-4">' +
+    '<div style="max-width:440px;width:100%;box-sizing:border-box;margin:0 auto;padding:40px 24px 32px" class="flex flex-col gap-4">' +
     '<div class="text-center">' +
     '<img src="' + LG + '" class="w-16 h-16 mx-auto rounded-2xl shadow-lg">' +
     '<h1 class="text-2xl font-bold mt-3">EduBuddy Backend Setup</h1>' +
@@ -257,8 +260,11 @@ export function showSetupNotice() {
  * Displays login ('in'), registration ('up'), or password recovery ('reset') full-screen modal overlay.
  * @param {'in'|'up'|'reset'} mode
  */
-export function showAuth(mode) {
-  const cfg = getConfig();
+export async function showAuth(mode) {
+  let cfg = getConfig();
+  if (!cfg.isConfigured) {
+    cfg = await loadConfig();
+  }
   if (!cfg.isConfigured) {
     showSetupNotice();
     return;
@@ -281,7 +287,7 @@ export function showAuth(mode) {
   const LG = headerImg ? headerImg.src : '';
 
   a.innerHTML =
-    '<div style="max-width:420px;margin:0 auto;padding:40px 24px 32px" class="flex flex-col gap-4">' +
+    '<div style="max-width:420px;width:100%;box-sizing:border-box;margin:0 auto;padding:40px 24px 32px" class="flex flex-col gap-4">' +
     '<div class="text-center">' +
     '<img src="' + LG + '" class="w-16 h-16 mx-auto rounded-2xl shadow-lg">' +
     '<h1 class="text-2xl font-bold mt-3">EduBuddy</h1>' +

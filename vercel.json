@@ -60,7 +60,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!.*\\.[\\w]+$).*)",
+      "source": "/((?!api/)(?!.*\\.[\\w]+$).*)",
       "destination": "/index.html"
     }
   ]

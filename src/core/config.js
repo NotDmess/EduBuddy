@@ -77,3 +77,44 @@ export function clearConfig() {
   }
 }
 
+/**
+ * Asynchronously attempts to load configuration from runtime endpoint (/api/config)
+ * if not already configured via window or localStorage.
+ * Automatically caches valid config to localStorage so subsequent offline PWA loads work.
+ * @returns {Promise<{supabaseUrl: string, supabaseAnonKey: string, isConfigured: boolean}>}
+ */
+export async function loadConfig() {
+  const current = getConfig();
+  if (current.isConfigured) return current;
+
+  if (typeof fetch !== 'undefined') {
+    try {
+      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      const timeoutId = controller ? setTimeout(() => controller.abort(), 3000) : null;
+      const res = await fetch('/api/config', {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+        signal: controller ? controller.signal : undefined
+      });
+      if (timeoutId) clearTimeout(timeoutId);
+
+      if (res && res.ok) {
+        const data = await res.json();
+        if (data && isValidConfig(data.supabaseUrl, data.supabaseAnonKey)) {
+          window.EDUBUDDY_CONFIG = Object.assign(window.EDUBUDDY_CONFIG || {}, {
+            SUPABASE_URL: data.supabaseUrl,
+            SUPABASE_ANON_KEY: data.supabaseAnonKey
+          });
+          saveConfig(data.supabaseUrl, data.supabaseAnonKey);
+          return getConfig();
+        }
+      }
+    } catch (err) {
+      // Offline, 404 on local static server, or network error - fallback gracefully
+    }
+  }
+
+  return current;
+}
+
+
