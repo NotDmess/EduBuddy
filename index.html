@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>EduBuddy - Teman Belajar Dimanapun</title>
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- PWA & Mobile Metadata -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0B6B4B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="EduBuddy">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body class="text-on-surface">
+  <!-- Splash Screen -->
+  <div id="splash">
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMxMEI5ODEiLz48cGF0aCBkPSJNMTQgMjJjMC00IDMtNyA3LTdoMjJjNCAwIDcgMyA3IDd2MTRjMCA0LTMgNy03IDdIMzBsLTkgN3YtN2MtNCAwLTctMy03LTd6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTMyIDI0Yy0zLTItNy0yLTEwLTF2MTNjMy0xIDctMSAxMCAxIDMtMiA3LTIgMTAtMVYyM2MtMy0xLTctMS0xMCAxeiIgZmlsbD0iIzEwQjk4MSIvPjxwYXRoIGQ9Ik0zMiAyNHYxMyIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=" alt="EduBuddy Splash Icon">
+    <b>EduBuddy</b>
+    <span>Teman Belajar Dimanapun</span>
+  </div>
+
+  <!-- Application Shell -->
+  <div id="app">
+    <!-- Top Header -->
+    <header id="hd">
+      <div class="h-16 px-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMxMEI5ODEiLz48cGF0aCBkPSJNMTQgMjJjMC00IDMtNyA3LTdoMjJjNCAwIDcgMyA3IDd2MTRjMCA0LTMgNy03IDdIMzBsLTkgN3YtN2MtNCAwLTctMy03LTd6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTMyIDI0Yy0zLTItNy0yLTEwLTF2MTNjMy0xIDctMSAxMCAxIDMtMiA3LTIgMTAtMVYyM2MtMy0xLTctMS0xMCAxeiIgZmlsbD0iIzEwQjk4MSIvPjxwYXRoIGQ9Ik0zMiAyNHYxMyIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=" class="h-8 w-8" alt="EduBuddy Logo">
+          <div class="flex flex-col">
+            <span class="text-[11px] font-bold tracking-wide uppercase text-primary leading-none">EduBuddy</span>
+            <h1 id="ttl" class="font-headline-sm font-semibold">Beranda</h1>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <button data-act="notif" aria-label="Notifikasi" class="w-12 h-12 flex items-center justify-center rounded-full">
+            <span class="material-symbols-outlined">notifications</span>
+          </button>
+          <button data-path="profil" aria-label="Profil" class="w-12 h-12 flex items-center justify-center">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjMTBCOTgxIi8+PGNpcmNsZSBjeD0iMzIiIGN5PSIyNSIgcj0iMTEiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTEwIDY0YzItMTUgMTItMjIgMjItMjJzMjAgNyAyMiAyMnoiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii45Ii8+PC9zdmc+" class="w-8 h-8 rounded-full ring-2 ring-primary/20" alt="Avatar">
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main View Container -->
+    <main id="view" class="pt-16 pb-28 px-5"></main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav id="nv">
+      <div class="flex justify-around py-2">
+        <button data-path="beranda" data-nav="beranda" class="flex flex-col items-center gap-0.5 px-3 py-1 text-outline min-w-[60px]">
+          <span class="material-symbols-outlined px-4 py-1 rounded-full">home</span>
+          <span class="text-[11px] font-semibold">Beranda</span>
+        </button>
+        <button data-path="belajar" data-nav="belajar" class="flex flex-col items-center gap-0.5 px-3 py-1 text-outline min-w-[60px]">
+          <span class="material-symbols-outlined px-4 py-1 rounded-full">local_library</span>
+          <span class="text-[11px] font-semibold">Belajar</span>
+        </button>
+        <button data-path="aman" data-nav="aman" class="flex flex-col items-center gap-0.5 px-3 py-1 text-outline min-w-[60px]">
+          <span class="material-symbols-outlined px-4 py-1 rounded-full">shield</span>
+          <span class="text-[11px] font-semibold">Aman</span>
+        </button>
+        <button data-path="jadwal" data-nav="jadwal" class="flex flex-col items-center gap-0.5 px-3 py-1 text-outline min-w-[60px]">
+          <span class="material-symbols-outlined px-4 py-1 rounded-full">event_available</span>
+          <span class="text-[11px] font-semibold">Jadwal</span>
+        </button>
+        <button data-path="profil" data-nav="profil" class="flex flex-col items-center gap-0.5 px-3 py-1 text-outline min-w-[60px]">
+          <span class="material-symbols-outlined px-4 py-1 rounded-full">account_circle</span>
+          <span class="text-[11px] font-semibold">Profil</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Modular Application Entry Point -->
+  <script type="module" src="src/core/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+/* ==========================================================================
+   EduBuddy Application Styles
+   Extracted from inline styles to maintain clean separation of concerns.
+   Preserves all selectors, cascade order, specificity, and keyframe animations.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Base & Global Layout
+   -------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+html, body, button, input, optgroup, select, textarea {
+  margin: 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: radial-gradient(70% 60% at 15% 10%, #c9f1de 0, transparent 60%),
+              radial-gradient(60% 50% at 90% 90%, #ffe9bd 0, transparent 55%),
+              #EFEBDD;
+  background-attachment: fixed;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+}
+
+/* Ensure Poppins overrides Tailwind font utility classes */
+.font-body-md,
+.font-body-sm,
+.font-headline-lg,
+.font-headline-md,
+.font-headline-sm,
+.font-label-lg,
+.font-label-md,
+.font-label-sm {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+p {
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0;
+}
+
+.on .material-symbols-outlined {
+  font-variation-settings: 'FILL' 1;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  background: radial-gradient(120% 50% at 100% 0, #d2f6e6 0, transparent 55%),
+              radial-gradient(90% 40% at 0 28%, #fff0cf 0, transparent 55%),
+              #FAF7F0;
+  box-shadow: 0 0 0 1px rgba(20, 35, 28, .05),
+              0 40px 90px -30px rgba(11, 61, 46, .45);
+}
+
+/* --------------------------------------------------------------------------
+   2. Header & Bottom Navigation Shell
+   -------------------------------------------------------------------------- */
+#hd, #nv {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  z-index: 50;
+}
+
+#hd {
+  top: 0;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: rgba(250, 247, 240, .85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(20, 35, 28, .06);
+}
+
+#hd h1, #view h2, #auth h1, #splash b, h1, h2, h3 {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+#hd h1 {
+  font-size: 19px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+#nv {
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: 0;
+  width: calc(100% - 28px);
+  max-width: 452px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, .8);
+  backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, .8);
+  box-shadow: 0 18px 44px -12px rgba(11, 61, 46, .35),
+              0 2px 6px rgba(11, 61, 46, .06);
+}
+
+#nv button {
+  font-size: 10.5px;
+  letter-spacing: .01em;
+}
+
+#nv .on {
+  transform: none;
+  color: #0B6B4B;
+}
+
+#nv .on > .material-symbols-outlined {
+  background: linear-gradient(135deg, #2BD39A, #0B6B4B) !important;
+  color: #fff;
+  box-shadow: 0 8px 18px -6px rgba(11, 107, 75, .7);
+  animation: pop .4s ease;
+}
+
+/* --------------------------------------------------------------------------
+   3. Keyframe Animations
+   -------------------------------------------------------------------------- */
+@keyframes up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pop {
+  0% { transform: scale(.6); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes sheet {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+
+@keyframes tin {
+  from { opacity: 0; transform: translate(-50%, 16px) scale(.9); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes ringIn {
+  from { stroke-dasharray: 0, 100; }
+}
+
+@keyframes grow {
+  from { transform: scaleX(0); }
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes rip {
+  to { transform: scale(3.5); opacity: 0; }
+}
+
+@keyframes fall {
+  to { transform: translateY(105vh) rotate(720deg); opacity: .9; }
+}
+
+@keyframes splash {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes bob {
+  0% { transform: scale(.4); opacity: 0; }
+  60% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   4. Staggered View Animations & Interactive States
+   -------------------------------------------------------------------------- */
+#view > div > * {
+  animation: up .5s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+#view > div > *:nth-child(2) { animation-delay: .06s; }
+#view > div > *:nth-child(3) { animation-delay: .12s; }
+#view > div > *:nth-child(4) { animation-delay: .18s; }
+#view > div > *:nth-child(5) { animation-delay: .24s; }
+#view > div > *:nth-child(6) { animation-delay: .3s; }
+#view > div > *:nth-child(n+7) { animation-delay: .36s; }
+
+button, [data-path], a {
+  transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+button:active, [data-path]:active, a:active {
+  transform: scale(.95);
+}
+
+#view button:hover, #view a:hover {
+  box-shadow: 0 6px 18px rgba(0, 108, 73, .12);
+}
+
+#view path[stroke-dasharray] {
+  animation: ringIn 1.1s ease-out;
+}
+
+#view .rounded-full[style*="width"] {
+  transform-origin: left;
+  animation: grow 1s ease-out;
+}
+
+#view .bg-secondary-fixed.rounded-full {
+  animation: beat 2.2s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   5. Modals, Toasts, Splash & Micro-Components
+   -------------------------------------------------------------------------- */
+.tst {
+  animation: tin .3s ease both;
+  background: #17332A !important;
+  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, .5);
+  bottom: 112px !important;
+  font-weight: 600;
+}
+
+#mdl {
+  animation: fade .2s;
+  backdrop-filter: blur(6px);
+}
+
+#mdl > div {
+  animation: sheet .4s cubic-bezier(.2, .9, .3, 1);
+  border-radius: 34px 34px 0 0 !important;
+  box-shadow: 0 -20px 60px -20px rgba(0, 0, 0, .35);
+}
+
+#mdl > div::before {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 5px;
+  border-radius: 9px;
+  background: #D9D3C3;
+  margin: -8px auto 16px;
+}
+
+.rpl {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  margin: -20px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, .35);
+  pointer-events: none;
+  animation: rip .6s ease-out forwards;
+}
+
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: radial-gradient(circle at 80% 15%, rgba(255, 255, 255, .2), transparent 40%),
+              linear-gradient(160deg, #1CA676, #0B3D2E);
+  animation: splash 1.9s ease forwards;
+  pointer-events: none;
+}
+
+#splash img {
+  width: 84px;
+  height: 84px;
+  border-radius: 22px;
+  animation: bob .8s ease both;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .25);
+}
+
+#splash b {
+  font-size: 34px;
+  margin-top: 16px;
+  animation: up .6s .3s both;
+}
+
+#splash span {
+  opacity: .9;
+  margin-top: 4px;
+  animation: up .6s .5s both;
+}
+
+.cf {
+  position: fixed;
+  top: -20px;
+  width: 10px;
+  height: 14px;
+  z-index: 120;
+  animation: fall 2.2s ease-in forwards;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   6. Component Accents & Brand Overrides
+   -------------------------------------------------------------------------- */
+#view .bg-surface-container-lowest,
+#auth .bg-surface-container-lowest {
+  border: 1px solid rgba(20, 35, 28, .05);
+  box-shadow: 0 1px 2px rgba(20, 35, 28, .04),
+              0 14px 34px -16px rgba(20, 35, 28, .2);
+}
+
+#view .rounded-\[20px\],
+#mdl .rounded-\[20px\] {
+  border-radius: 26px;
+}
+
+#view[data-r=beranda] > div > .bg-gradient-to-br {
+  background: radial-gradient(circle at 92% 8%, rgba(255, 255, 255, .22), transparent 38%),
+              linear-gradient(140deg, #0B3D2E, #0B6B4B 62%, #1CA676);
+  color: #fff;
+  border-radius: 30px;
+  padding: 22px;
+  box-shadow: 0 22px 44px -20px rgba(11, 61, 46, .7);
+}
+
+#view[data-r=beranda] > div > .bg-gradient-to-br h2 {
+  color: #fff;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+#view[data-r=beranda] > div > .bg-gradient-to-br p {
+  color: rgba(255, 255, 255, .82);
+}
+
+.bg-primary-container {
+  background: linear-gradient(135deg, #34D8A0, #13A472) !important;
+  color: #fff !important;
+  box-shadow: 0 12px 26px -10px rgba(19, 164, 114, .75);
+}
+
+.bg-primary {
+  background: linear-gradient(135deg, #118A60, #0B6B4B) !important;
+  box-shadow: 0 12px 26px -12px rgba(11, 107, 75, .8);
+}
+
+#view h3 {
+  letter-spacing: -.005em;
+}
+
+#view .rounded-full.bg-surface-container {
+  background: #EEE9DC;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  transition: box-shadow .2s, border-color .2s;
+  letter-spacing: -0.005em;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #0B6B4B;
+  box-shadow: 0 0 0 3px rgba(11, 107, 75, .15);
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #0B6B4B;
+}
+
+/* --------------------------------------------------------------------------
+   7. Accessibility: Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
